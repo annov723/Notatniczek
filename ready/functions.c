@@ -1,8 +1,5 @@
 #include "functions.h"
 
-/**
- * @brief 
-*/
 void menu(){
     puts( FLOWERS );
     printf( "\n%*s\n", MID + (int)( strlen( TITLE ) / 2 ), TITLE );
@@ -61,12 +58,11 @@ bool finish(){
     }
     clean();
     puts( "\n" );
-    if( n == 'Y' ){
+
+    if( n == 'Y' )
         return true;
-    }
-    else{
+    else
         return false;
-    }
 }
 
 void rotate(){
@@ -82,7 +78,6 @@ void rotate(){
         usleep( 1000000 / 10 );
         printf( "\r" );
     }
-    
 }
 
 void header( const int num ){
