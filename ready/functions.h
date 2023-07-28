@@ -68,33 +68,68 @@ bool finish();
 */
 void rotate();
 
-bool utworz( const int, const int, char ** );
+/**
+ * @brief Depending on the int given, the header for different options shows up.
+ * 
+ * @param num number of chosen option
+*/
+void header( const int num );
 
-bool wyswietl( const int, const int, char ** );
+/**
+ * @brief Allocates an array for n pointers to the notes and returns ppointer to this array.
+ * 
+ * @param n how much pointers to new notes should be created
+*/
+char **alloc_w( const int n );
 
-bool edytuj( const int, const int, char ** );
+/**
+ * @brief Allocates an array for a note and returns a pointer to this array.
+ * 
+ * @param n size of char type array
+*/
+char *alloc_n( const int n );
 
-bool usun(const int, const int, char **, int *, int *, int * );
+/**
+ * @brief Reallocates an array for n pointers to the notes and returns a pointer to this array.
+ * 
+ * @param stare size of pointers to char type pointers array at the beginning
+ * @param nowe number of pointers to add
+ * @param ptr pointer to the array
+*/
+char **realloc_w( const int stare, const int nowe, char **ptr );
 
-bool importuj( const int, const int, char **, int *, int * );
+/**
+ * @brief Reallocates an array for a note and returns a pointer to this array.
+ * 
+ * @param stare size of char type array at the beginning
+ * @param nowe number of chars to add
+ * @param ptr pointer to the array
+*/
+char *realloc_n( const int stare, const int nowe, char *ptr );
 
-bool eksportuj( const int, const int, char ** );
+/**
+ * @brief Creates a new note and returns true if everything went well
+ * 
+ * @param cc number of chosen option
+ * @param num place in array of pointers to arrays of chars (a "big" array) where the new note wil be placed
+ * @param tab_p pointer to the "big" array
+*/
+bool utworz( const int cc, const int num, char **tab_p );
 
-bool szyfruj(const int, const int, char **, int * );
+/**
+ * @brief Shows a list of all notes and the one that user'd choose will be displayed and returns true if everything went well
+ * there are 3 options of show notes - in alphabetical order, from the latest or form the oldest
+ * 
+ * @param cc number of chosen option
+ * @param num how much notes do we have
+ * @param tab_p pointer to the "big" array 
+*/
+bool wyswietl( const int cc, const int num, char **tab_p );
 
-bool rozszyfruj(const int, const int, char **, int * );
-
-void header( const int );
-
-char **alloc_w( const int );
-
-char *alloc_n( const int );
-
-char *realloc_n( const int, const int, char * );
-
-char **realloc_w( const int, const int , char ** );
-
-void alpha_sort( const int, char ** );
+/**
+ * @brief
+*/
+void alpha_sort( const int num, char **tab_p );
 
 void date_sort( const int, const int, char ** );
 
@@ -103,6 +138,61 @@ int cmps( const void *, const void * );
 int choice_n( const int, const char * );
 
 int kropki( char **, const int );
+
+
+/**
+ * @brief Creates a new note and returns true if everything went well
+ * 
+ * @param cc number of chosen option
+ * @param num place in array of pointers to arrays of chars (a "big" array) where the new note wil be placed
+ * @param tab_p pointer to the "big" array
+*/
+bool edytuj( const int, const int, char ** );
+
+/**
+ * @brief Creates a new note and returns true if everything went well
+ * 
+ * @param cc number of chosen option
+ * @param num place in array of pointers to arrays of chars (a "big" array) where the new note wil be placed
+ * @param tab_p pointer to the "big" array
+*/
+bool usun(const int, const int, char **, int *, int *, int * );
+
+/**
+ * @brief Creates a new note and returns true if everything went well
+ * 
+ * @param cc number of chosen option
+ * @param num place in array of pointers to arrays of chars (a "big" array) where the new note wil be placed
+ * @param tab_p pointer to the "big" array
+*/
+bool importuj( const int, const int, char **, int *, int * );
+
+/**
+ * @brief Creates a new note and returns true if everything went well
+ * 
+ * @param cc number of chosen option
+ * @param num place in array of pointers to arrays of chars (a "big" array) where the new note wil be placed
+ * @param tab_p pointer to the "big" array
+*/
+bool eksportuj( const int, const int, char ** );
+
+/**
+ * @brief Creates a new note and returns true if everything went well
+ * 
+ * @param cc number of chosen option
+ * @param num place in array of pointers to arrays of chars (a "big" array) where the new note wil be placed
+ * @param tab_p pointer to the "big" array
+*/
+bool szyfruj(const int, const int, char **, int * );
+
+/**
+ * @brief Creates a new note and returns true if everything went well
+ * 
+ * @param cc number of chosen option
+ * @param num place in array of pointers to arrays of chars (a "big" array) where the new note wil be placed
+ * @param tab_p pointer to the "big" array
+*/
+bool rozszyfruj(const int, const int, char **, int * );
 
 /**
  * @brief Returns random int value.

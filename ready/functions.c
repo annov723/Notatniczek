@@ -97,45 +97,37 @@ void header( const int num ){
 char **alloc_w( const int n ){
     char **ptr = calloc( n, sizeof( char * ) ); //ilosc notatek
 
-    if( ptr != NULL ){
+    if( ptr != NULL )
         return ptr;
-    }
-    else{
+    else
         exit( EXIT_FAILURE );
-    }
 }
 
 char *alloc_n( const int n ){
     char *ptr = calloc( n, sizeof( char ) ); //wielkosc maksymalna jednej notatki
  
-    if( ptr != NULL ){
+    if( ptr != NULL )
         return ptr;
-    }
-    else{
+    else
         exit( EXIT_FAILURE );
-    }
 }
 
 char **realloc_w( const int stare, const int nowe, char **ptr ){ //realokacja tablicy notatek
     ptr = realloc( ptr, ( stare + ( nowe ) ) * sizeof( char * ) ); //ilosc notatek
 
-    if( ptr != NULL ){
+    if( ptr != NULL )
         return ptr;
-    }
-    else{
+    else
         exit( EXIT_FAILURE );
-    }
 }
 
 char *realloc_n( const int stare, const int nowe, char *ptr ){ //realokacja pojedynczej notatki
     ptr = realloc( ptr, ( stare + ( nowe ) ) * sizeof( char ) ); //powiekszamy rozmiar pojedynczej notatki, pojedyncze tablice notatek sa zapisane w innym miejscu w pamieci niz wielka tablica noatatek, wiec powiekszanie poszzegolnych noatatek nie powinno wplynac na wielka tablice notatek
 
-    if( ptr != NULL ){
+    if( ptr != NULL )
         return ptr;
-    } 
-    else{
+    else
         exit( EXIT_FAILURE );
-    }
 }
 
 bool utworz( const int cc, const int num, char **tab_p ){
@@ -160,9 +152,9 @@ bool utworz( const int cc, const int num, char **tab_p ){
 
         *( *( tab_p + num ) + count ) = '\0'; //chwilowo zeby ulatwic sprawdzenie warunkow
 
-        if( c == '\n' ){
+        if( c == '\n' )
             enter = 0;
-        }
+        
         if( c == '\t' ){ //tutaj musimy zalozyc, ze tab ma dlugosc 8 w terminalu (tyle ma jesli sprawdzimy echo $'\t' | wc -L), ale prawde jest taka, ze to jakos od czzapy wypisuje...
             for( int i = 0; i < 7; i++ ){
                 if( enter == ( MID * 2 ) ){ //sprawdzamy czy nie trzeba przejsc do nowej linii
@@ -184,7 +176,6 @@ bool utworz( const int cc, const int num, char **tab_p ){
             *( tab_p + num ) = realloc_n( k, MIN_D - 1, *( tab_p + num ) ); //dodajemy kolejne 100 miejsc na znaki
             k = k + MIN_D - 1;
         }
-
     }
 
     clean();
@@ -223,37 +214,32 @@ bool wyswietl( const int cc, const int num, char **tab_p ){
     printf( "\n(nacisnij enter zeby wrocic do glownego menu)");
     getchar();
     clean();
+    
     ans = 1;
-
     return ans;
 }
 
 void alpha_sort( const int num, char **tab_p ){
 
     char *tab_s[num];
-    for( int i = 0; i < num; i++ ){
+    for( int i = 0; i < num; i++ )
         *( tab_s + i ) = *( tab_p + i );
-    }
 
     qsort( tab_s, num, sizeof( char * ), cmps );
 
     for( int i = 0; i < num; i++ ){
         int k = kropki( tab_s, i );
-        if( k == 0 ){
+        if( k == 0 )
             printf( "%d. ...\n", i + 1 );
-        }
-        else if( k == 10 ){
+        else if( k == 10 )
             printf( "%d. %.10s...\n", i + 1, *( tab_s + i ) );
-        }
-        else{
+        else
             printf( "%d. %.*s...\n", i + 1, k,*( tab_s + i ) );
-        }
     }
 
     int g = choice_n( num, "\nPodaj numer notatki, ktora chcesz otworzyc: " );
     system( "clear" );
     printf( "\n%s\n", *( tab_s + g - 1 ) );
-
 }
 
 int choice_n( const int num, const char *string ){
