@@ -32,21 +32,21 @@
 #define OPT7 "7. Rozszyfruj"
 #define OPT8 "8. Zakoncz"
 
-#define MIN_D 100 + 1 //nie moze być mniejsze niz 2!!, the beginning size of every note created
+#define MIN_D 100 + 1 //nie moze byc mniejsze niz 2!!, the beginning size of every note created
 #define MIN_I 10 //the beginning size of notes' array
 
 /**
- * @brief Shows menu.
+ * @brief shows menu
 */
 void menu();
 
 /**
- * @brief Loading animation ...as we all know - good app must take a very long time to load ^^
+ * @brief loading animation ...as we all know - good app must take a very long time to load ^^
 */
 void load();
 
 /**
- * @brief Returns '\n' when user input is one sign >= first parameter and <= the second.
+ * @brief returns '\n' when user input is one sign >= first parameter and <= the second
  * 
  * @param one the lowest value from ASCII table
  * @param two the highest value from ASCII table
@@ -54,43 +54,43 @@ void load();
 char choice( const char one, const char two );
 
 /**
- * @brief Cleans buffer.
+ * @brief cleans buffer
 */
 void clean();
 
 /**
- * @brief Returns true if user input is "Y"/"y" which ends the program
+ * @brief returns true if user input is "Y"/"y" which ends the program
 */
 bool finish();
 
 /**
- * @brief A special function to create an animated text running from the right to the left side of the terminal <3 ...xD
+ * @brief a special function to create an animated text running from the right to the left side of the terminal <3 ...xD
 */
 void rotate();
 
 /**
- * @brief Depending on the int given, the header for different options shows up.
+ * @brief depending on the int given, the header for different options shows up
  * 
  * @param num number of chosen option
 */
 void header( const int num );
 
 /**
- * @brief Allocates an array for n pointers to the notes and returns ppointer to this array.
+ * @brief allocates an array for n pointers to the notes and returns ppointer to this array
  * 
  * @param n how much pointers to new notes should be created
 */
 char **alloc_w( const int n );
 
 /**
- * @brief Allocates an array for a note and returns a pointer to this array.
+ * @brief allocates an array for a note and returns a pointer to this array
  * 
  * @param n size of char type array
 */
 char *alloc_n( const int n );
 
 /**
- * @brief Reallocates an array for n pointers to the notes and returns a pointer to this array.
+ * @brief reallocates an array for n pointers to the notes and returns a pointer to this array
  * 
  * @param stare size of pointers to char type pointers array at the beginning
  * @param nowe number of pointers to add
@@ -99,7 +99,7 @@ char *alloc_n( const int n );
 char **realloc_w( const int stare, const int nowe, char **ptr );
 
 /**
- * @brief Reallocates an array for a note and returns a pointer to this array.
+ * @brief reallocates an array for a note and returns a pointer to this array
  * 
  * @param stare size of char type array at the beginning
  * @param nowe number of chars to add
@@ -108,91 +108,124 @@ char **realloc_w( const int stare, const int nowe, char **ptr );
 char *realloc_n( const int stare, const int nowe, char *ptr );
 
 /**
- * @brief Creates a new note and returns true if everything went well
+ * @brief creates a new note and returns true if everything went well
  * 
  * @param cc number of chosen option
  * @param num place in array of pointers to arrays of chars (a "big" array) where the new note wil be placed
- * @param tab_p pointer to the "big" array
+ * @param tab_p pointer to "big" array
 */
 bool utworz( const int cc, const int num, char **tab_p );
 
 /**
- * @brief Shows a list of all notes and the one that user'd choose will be displayed and returns true if everything went well
+ * @brief shows a list of all notes and the one that user'd choose will be displayed and returns true if everything went well
  * there are 3 options of show notes - in alphabetical order, from the latest or form the oldest
  * 
  * @param cc number of chosen option
- * @param num how much notes do we have
- * @param tab_p pointer to the "big" array 
+ * @param num how many notes do we have
+ * @param tab_p pointer to "big" array 
 */
 bool wyswietl( const int cc, const int num, char **tab_p );
 
 /**
- * @brief
+ * @brief sorts notes in cmps function's alphabumeric order and display all the notes
+ * 
+ * @param num how many notes do we have
+ * @param tab_p pointer to "big" array
 */
 void alpha_sort( const int num, char **tab_p );
 
-void date_sort( const int, const int, char ** );
-
-int cmps( const void *, const void * );
-
-int choice_n( const int, const char * );
-
-int kropki( char **, const int );
-
+/**
+ * @brief returns user input when it belongs to the range
+ * 
+ * @param num how many notes do we have
+ * @param string information on stdout to inform user what they should write
+*/
+int choice_n( const int num, const char *string );
 
 /**
- * @brief Creates a new note and returns true if everything went well
+ * @brief returns integer like a strcmp, sorts by numbers -> letters, ignoring case -> other signs
  * 
- * @param cc number of chosen option
- * @param num place in array of pointers to arrays of chars (a "big" array) where the new note wil be placed
- * @param tab_p pointer to the "big" array
+ * @param a pointer to the first note
+ * @param b pointer to the second note
 */
-bool edytuj( const int, const int, char ** );
+int cmps( const void *a, const void *b );
 
 /**
- * @brief Creates a new note and returns true if everything went well
+ * @brief print all the notes from the latest
  * 
- * @param cc number of chosen option
- * @param num place in array of pointers to arrays of chars (a "big" array) where the new note wil be placed
- * @param tab_p pointer to the "big" array
+ * @param num how many notes do we have
+ * @param tab_p pointer to "big" array
 */
-bool usun(const int, const int, char **, int *, int *, int * );
+void fast_print( int num, char **tab_p );
 
 /**
- * @brief Creates a new note and returns true if everything went well
+ * @brief returns 0 if a note if empty, other way returns number of signs to print
  * 
- * @param cc number of chosen option
- * @param num place in array of pointers to arrays of chars (a "big" array) where the new note wil be placed
- * @param tab_p pointer to the "big" array
+ * @param tab_p pointer to "big" array
+ * @param i the number of note to check
 */
-bool importuj( const int, const int, char **, int *, int * );
+int kropki( char **tab_p, const int i );
 
 /**
- * @brief Creates a new note and returns true if everything went well
+ * @brief prints all notes in date order, from latest or from the oldest
  * 
- * @param cc number of chosen option
- * @param num place in array of pointers to arrays of chars (a "big" array) where the new note wil be placed
- * @param tab_p pointer to the "big" array
+ * @param n which sorting option user's chosen - 1 from latest, 2 from oldest note
+ * @param num how many notes do we have
+ * @param tab_p pointer to "big" array
 */
-bool eksportuj( const int, const int, char ** );
+void date_sort( const int n, const int num, char **tab_p);
 
 /**
- * @brief Creates a new note and returns true if everything went well
+ * @brief deletes a chosen note, returns true if everything went good
  * 
  * @param cc number of chosen option
- * @param num place in array of pointers to arrays of chars (a "big" array) where the new note wil be placed
+ * @param num how many notes do we have
  * @param tab_p pointer to the "big" array
+ * @param new_max pointer to number of available space for new notes (if we dalete 10th note, the "big" array is reallocated to the smaller one)
+ * @param szyfr pointer to an array of numbers of encrypted notes, if a chosen note is encrypted, the data from the array will be deleted too
+ * @param szy pointer to number of encrypted notes, should be decreased if chosen note is encrypted
 */
-bool szyfruj(const int, const int, char **, int * );
+bool usun( const int cc, const int num, char **tab_p, int *new_max, int *szyfr, int *szy );
 
 /**
- * @brief Creates a new note and returns true if everything went well
+ * @brief export chosen note (user input file path), returns true if everything went well
  * 
  * @param cc number of chosen option
- * @param num place in array of pointers to arrays of chars (a "big" array) where the new note wil be placed
+ * @param num how many notes do we have
  * @param tab_p pointer to the "big" array
 */
-bool rozszyfruj(const int, const int, char **, int * );
+bool eksportuj( const int cc, const int num, char **tab_p );
+
+/**
+ * @brief imports a note chosen by user and returns true if everything went well
+ * 
+ * @param cc number of chosen option
+ * @param num how many notes do we have
+ * @param tab_p pointer to the "big" array
+ * @param szyfr pointer to an array of numbers of encrypted notes, if imported note is encrypted it's number should be add to this array
+ * @param szy pointer to an integer counting encrypted notes
+*/
+bool importuj( const int cc, const int num, char **tab_p, int *szyfr, int *szy );
+
+/**
+ * @brief encrypts a chosen note and returns true if everything went well
+ * 
+ * @param cc number of chosen option
+ * @param num how many notes do we have
+ * @param tab_p pointer to the "big" array
+ * @param szyfr pointer to an array of numbers of encrypted notes
+*/
+bool szyfruj( const int cc, const int num, char **tab_p, int *szyfr );
+
+/**
+ * @brief decrypts a note and returns true if everything went well
+ * 
+ * @param cc number of chosen option
+ * @param num how many notes do we have
+ * @param tab_p pointer to the "big" array
+ * @param szyfr pointer to an array of numbers of encrypted notes
+*/
+bool rozszyfruj( const int cc, const int num, char **tab_p, int *szyfr );
 
 /**
  * @brief Returns random int value.

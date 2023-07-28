@@ -141,8 +141,6 @@ bool utworz( const int cc, const int num, char **tab_p ){
     int enter = 0; //licznik do przerzucania do nowej linii
     char *g = NULL; //zmienna pomocnicza potrzebna chwilowo do operowaniu na elementach tablicy
 
-    //char *ptr = *( tab_p + num ); //wskazuje na pierwsza pozycje danej notatki
-
     printf("\nWprowadz notatke :)\nJedyne o czym musisz pamietac to zeby wpisac \"|\" i nacisnij\nENTER kiedy bedziesz chcial zakonczyc notatke, milego pisania!\n\n"  );
 
     while( ( c = getchar() ) != '|' ){
@@ -182,7 +180,6 @@ bool utworz( const int cc, const int num, char **tab_p ){
     *( *( tab_p + num ) + count ) = '\0';
     *( tab_p + num ) = realloc_n( 0, count + 1, *( tab_p + num ) ); //zmniejszamy wielkosc notatki zeby pasowala
     g = NULL;
-    //ptr = NULL;
     ans = 1;
     return ans;
 }
@@ -250,7 +247,6 @@ int choice_n( const int num, const char *string ){
         clean();
         printf( "%s", string );
     }
-
     return g;
 }
 
@@ -266,21 +262,19 @@ int cmps( const void *a, const void *b ){ //wrzucasz tam wskaźniki do pierwszyc
         if ( n != 0 ) return n;
         i++;
         }
-        if( isdigit( *( s1 + i ) ) && *( s2 + i ) != '\0' ) return -1; //nie doszło do końca drugiego łańcucha, a do tej pory były identyczne i kolejny znak w 1 to cyfra
-        //else if( isdigit( *( s1 + i ) ) && *( s2 + i ) == '\0' ) return 1; //doszło do końca drugiego łańcucha, do tej pory były identyczne -> krószy drugi ma być wcześniej
-        else if( isdigit( *( s2 + i ) ) && *( s1 + i ) != '\0' ) return 1; //1 się nie skończył, a drugi ma cyfrę
-        //else if( isdigit( *( s2 + i ) ) && *( s1 + i ) == '\0' ) return -1; //1 się skończył - krótszy wcześniej
 
+        if( isdigit( *( s1 + i ) ) && *( s2 + i ) != '\0' ) return -1; //nie doszło do końca drugiego łańcucha, a do tej pory były identyczne i kolejny znak w 1 to cyfra
+        else if( isdigit( *( s2 + i ) ) && *( s1 + i ) != '\0' ) return 1; //1 się nie skończył, a drugi ma cyfrę
+        
         while( isalpha( *( s1 + i ) ) && isalpha ( *( s2 + i ) ) ){
             int n = ( int ) toupper( *( s1 + i ) ) - ( int ) toupper( *( s2 + i ) );
             if ( n != 0 ) return n;
             i++;
         }
-        if( isalpha( *( s1 + i ) ) && *( s2 + i ) != '\0' && !isdigit( *( s2 + i ) ) ) return -1;
-        //else if( isalpha( *( s1 + i ) ) && *( s2 + i ) == '\0' ) return 1;
-        else if( isalpha( *( s2 + i ) ) && *( s1 + i ) != '\0' && !isdigit( *( s1 + i ) ) ) return 1;
-        //else if( isalpha( *( s2 + i ) ) && *( s1 + i ) == '\0' ) return -1;
 
+        if( isalpha( *( s1 + i ) ) && *( s2 + i ) != '\0' && !isdigit( *( s2 + i ) ) ) return -1;
+        else if( isalpha( *( s2 + i ) ) && *( s1 + i ) != '\0' && !isdigit( *( s1 + i ) ) ) return 1;
+        
         while( !isalpha( *( s1 + i ) ) && !isalpha ( *( s2 + i ) ) && !isdigit( *( s1 + i ) ) && !isdigit( *( s2 + i ) ) && *( s1 + i ) != '\0' && *( s2 + i ) != '\0' ){
             int n = strncmp( s1 + i, s2 + i, 1 );
             if ( n != 0 ) return n;
@@ -290,8 +284,6 @@ int cmps( const void *a, const void *b ){ //wrzucasz tam wskaźniki do pierwszyc
         if( *( s1 + i ) == '\0' && *( s2 + i ) == '\0' ) return 0;
         else if( *( s1 + i ) == '\0' ) return -1;
         else if( *( s2 + i ) == '\0' ) return 1;
-        
-
     }
 
     return 0;
@@ -301,70 +293,60 @@ int cmps( const void *a, const void *b ){ //wrzucasz tam wskaźniki do pierwszyc
 void fast_print( int num, char **tab_p ){ //*( tab_p + num - g ) to wybrana notatka
     for( int i = num - 1; i >= 0; i-- ){
         int k = kropki( tab_p, i );
-        if( k == 0 ){
+
+        if( k == 0 )
             printf( "%d. ...\n", num - i );
-        }
-        else if( k == 10 ){
+        else if( k == 10 )
             printf( "%d. %.10s...\n", num - i, *( tab_p + i ) );
-        }
-        else{
+        else
             printf( "%d. %.*s...\n", num - 1, k,*( tab_p + i ) );
-        }
     }
 }
 
 int kropki( char **tab_p, const int i ){
-    if( **( tab_p + i ) == '\0' ){ //jeśli jest pusta notatka
+    if( **( tab_p + i ) == '\0' ) //jeśli jest pusta notatka
         return 0;
-    }
 
     int j;
     for( j = 0; j < 10; j++ ){
-            if( *( *( tab_p + i ) + j ) == '\n' || *( *( tab_p + i ) + j ) == '\t' ){ //jeśli jest endline przed 10 to wypiszemy tylko do tego znaku
+            if( *( *( tab_p + i ) + j ) == '\n' || *( *( tab_p + i ) + j ) == '\t' ) //jeśli jest endline przed 10 to wypiszemy tylko do tego znaku
                 return j;
-            }
     }
-    return j; //jak j = 10 to znaczy, że można normalnie wypisać wszystko
 
+    return j; //jak j = 10 to znaczy, że można normalnie wypisać wszystko
 }
 
 void date_sort( const int n, const int num, char **tab_p ){
     if( n == 1 ){
         for( int i = 0; i < num; i++ ){
             int k = kropki( tab_p, i );
-            if( k == 0 ){
+
+            if( k == 0 )
                 printf( "%d. ...\n", i + 1 );
-            }
-            else if( k == 10 ){
+            else if( k == 10 )
                 printf( "%d. %.10s...\n", i + 1, *( tab_p + i ) );
-            }
-            else{
+            else
                 printf( "%d. %.*s...\n", i + 1, k,*( tab_p + i ) );
-            }
-            
         }
         int g = choice_n( num, "\nPodaj numer notatki, ktora chcesz otworzyc: " );
         system( "clear" );
         printf( "\n%s\n", *( tab_p + g - 1 ) );
-
     }
     else{
         for( int i = num - 1; i >= 0; i-- ){
             int k = kropki( tab_p, i );
-            if( k == 0 ){
+
+            if( k == 0 )
                 printf( "%d. ...\n", num - i );
-            }
-            else if( k == 10 ){
+            else if( k == 10 )
                 printf( "%d. %.10s...\n", num - i, *( tab_p + i ) );
-            }
-            else{
+            else
                 printf( "%d. %.*s...\n", num - 1, k,*( tab_p + i ) );
-            }
         }
+
         int g = choice_n( num, "\nPodaj numer notatki, ktora chcesz otworzyc: " );
         system( "clear" );
         printf( "\n%s\n", *( tab_p + num - g ) );
-
     }
 }
 
@@ -381,9 +363,8 @@ bool usun( const int cc, const int num, char **tab_p, int *new_max, int *szyfr, 
         *( tab_p + g ) = NULL;
     }
 
-    for( ; g < ( num - 1 ); g++ ){
-        *( tab_p + g ) = *( tab_p + g + 1 );
-    } //g = num - 1 czyli nowa ilosc notatek
+    for( ; g < ( num - 1 ); g++ )
+        *( tab_p + g ) = *( tab_p + g + 1 ); //g = num - 1 czyli nowa ilosc notatek
 
     if( num !=  *new_max - ( MIN_I / 2 ) ){
         clean();
@@ -391,12 +372,10 @@ bool usun( const int cc, const int num, char **tab_p, int *new_max, int *szyfr, 
         return ans;
     }
     
-
     tab_p = realloc_w( *new_max, ( - MIN_I / 2 ), tab_p );
     *new_max = *new_max - ( MIN_I / 2 );
 
     clean();
-    ans = 1;
 
     if( *szy > 0 ){
         for( int i = 0; i < MAX_SZYFR; i++ ){
@@ -404,12 +383,12 @@ bool usun( const int cc, const int num, char **tab_p, int *new_max, int *szyfr, 
                 szyfr[i] = -1;
                 *szy = *szy - 1;
             }
-            if( szyfr[i] > g ){
+            if( szyfr[i] > g )
                 szyfr[i] = szyfr[i] - 1;
-            }
         }
     }
 
+    ans = 1;
     return ans;
 }
 
@@ -440,9 +419,8 @@ bool eksportuj( const int cc, const int num, char **tab_p ){
     printf( "Zawartosc wyeksportowanego pliku %s:\n", sciezka );
     if( ( ftp = fopen( sciezka, "r" ) ) == NULL ) return ans;
 
-    while(  ( ch = fgetc( ftp ) ) != '\0' && !feof( ftp ) ){ //!feof( ftp ) zwraca prawdę jeśli wskazywany jest koniec pliku
+    while(  ( ch = fgetc( ftp ) ) != '\0' && !feof( ftp ) ) //!feof( ftp ) zwraca prawdę jeśli wskazywany jest koniec pliku
         printf( "%c", ch );
-    }
 
     printf( "\n\n(nacisnij enter zeby wrocic do glownego menu)");
     getchar();
@@ -483,7 +461,6 @@ bool importuj( const int cc, const int num, char **tab_p, int *szyfr, int *szy )
                 break;
             }
         }
-
     }
 
     *( tab_p + num ) = alloc_n( MIN_D );
@@ -498,8 +475,6 @@ bool importuj( const int cc, const int num, char **tab_p, int *szyfr, int *szy )
     }
     *( sciezka + x ) = '\0';
 
-
-
     FILE *ftp;
     if( ( ftp = fopen( sciezka, "r" ) ) == NULL ) return ans;
 
@@ -513,9 +488,9 @@ bool importuj( const int cc, const int num, char **tab_p, int *szyfr, int *szy )
 
         *( *( tab_p + num ) + count ) = '\0'; //chwilowo zeby ulatwic sprawdzenie warunkow
 
-        if( c == '\n' ){
+        if( c == '\n' )
             enter = 0;
-        }
+
         if( c == '\t' ){ //tutaj musimy zalozyc, ze tab ma dlugosc 8 w terminalu (tyle ma jesli sprawdzimy echo $'\t' | wc -L), ale prawde jest taka, ze to jakos od czzapy wypisuje...
             for( int i = 0; i < 7; i++ ){
                 if( enter == ( MID * 2 ) ){ //sprawdzamy czy nie trzeba przejsc do nowej linii
@@ -532,12 +507,12 @@ bool importuj( const int cc, const int num, char **tab_p, int *szyfr, int *szy )
             *g = '\n';
             enter = strlen( g ) - 1;
         }
+
         //sprawdzamy czy nie trzeba realokowac tablicy, jesli dodawalismy '\n' to juz tego nie robimy bo tam tablica zostala realokowana
         if( ( count + 1 ) == k ){ //zawsze musi byc o 1 wiecej miejsca na wszelki wypadek (count + 1 to ilość miejsc, jedno miejsce dodaje nam inkrementacja count)
             *( tab_p + num ) = realloc_n( k, MIN_D - 1, *( tab_p + num ) ); //dodajemy kolejne 100 miejsc na znaki
             k = k + MIN_D - 1;
         }
-
     }
 
     *( *( tab_p + num ) + count ) = '\0';
@@ -579,12 +554,10 @@ bool szyfruj( const int cc, const int num, char **tab_p, int *szyfr ){
     while( 1 ){
         c = getchar();
         licznik++;
-        if( licznik == 4 && c == '\n' ){
+        if( licznik == 4 && c == '\n' )
             break;
-        }
-        if( c > 48 && c < 58 && licznik < 4 ){
+        if( c > 48 && c < 58 && licznik < 4 )
             tab[licznik - 1] = atoi( &c );            
-        }
         else{
             printf( "wprowadzono bledny kod...\n" );
             clean();
@@ -596,9 +569,8 @@ bool szyfruj( const int cc, const int num, char **tab_p, int *szyfr ){
     srand( time( NULL ) );
     int coile = i_rand( 0, 2 ); //cyfra kodu, która określa co ile powtarzamy schemat
     int dl = strlen( *( tab_p + g ) ); //długość notatki
-    if( dl < 10 ){ //w tym przypadku przy odszyfrowywaniu pierwsze sprawdzamy ten warunek
+    if( dl < 10 ) //w tym przypadku przy odszyfrowywaniu pierwsze sprawdzamy ten warunek
         tab[coile] = dl;
-    }
     int dl2 = dl;
 
     int ile = dl / tab[coile]; //ile razy musimy dany schemat odtworzyć
@@ -608,13 +580,12 @@ bool szyfruj( const int cc, const int num, char **tab_p, int *szyfr ){
         int k = i_rand( 0, 2 ); //jaka liczbę dodajemy do tej pierwszej wybranej, to dopisujemy na koniec notatki
         int up = tab[k] + tab[coile]; //o ile podnosimy do góry
         int max = ile; //ile razy w całości powtarzamy dany schemat
-        if( mod > i ){
+        if( mod > i )
             max++;
-        }
+
         for( int j = 0; j < max; j++ ){
-            if( *( *( tab_p + g ) + i + ( j * tab[coile] ) ) != '\n' && *( *( tab_p + g ) + i + ( j * tab[coile] ) ) != '\t' ){
+            if( *( *( tab_p + g ) + i + ( j * tab[coile] ) ) != '\n' && *( *( tab_p + g ) + i + ( j * tab[coile] ) ) != '\t' )
                 *( *( tab_p + g ) + i + ( j * tab[coile] ) ) = *( *( tab_p + g ) + i + ( j * tab[coile] ) ) + up;
-            }
         }
         *( *( tab_p + g ) + dl ) = k + 48; //0, 1 lub 2
         dl++;
@@ -645,13 +616,12 @@ bool rozszyfruj( const int cc, const int num, char **tab_p, int *szyfr ){
 
     int prawdziwe = 0;
     for( int i = 0; i <MAX_SZYFR; i++ ){
-        if( szyfr[i] == g ){
+        if( szyfr[i] == g )
             prawdziwe = 1;
-        }
     }
-    if( prawdziwe == 0 ){
+    if( prawdziwe == 0 )
         return 0;
-    }
+
     //usuwamy z tab szyfr tą notatkę
     for( int i = 0; i < MAX_SZYFR; i++ ){
         if( szyfr[i] == g ){
@@ -667,12 +637,10 @@ bool rozszyfruj( const int cc, const int num, char **tab_p, int *szyfr ){
     while( 1 ){
         c = getchar();
         licznik++;
-        if( licznik == 4 && c == '\n' ){
+        if( licznik == 4 && c == '\n' )
             break;
-        }
-        if( c > 48 && c < 58 && licznik < 4 ){
+        if( c > 48 && c < 58 && licznik < 4 )
             tab[licznik - 1] = atoi( &c );            
-        }
         else{
             printf( "wprowadzono bledny kod...\n" );
             clean();
@@ -691,10 +659,8 @@ bool rozszyfruj( const int cc, const int num, char **tab_p, int *szyfr ){
         tab[coile] = prop;
         dl2 = dl - tab[coile] - 2;
     }
-    else{
-        dl2 = dl - tab[coile] - 1;
-    }
-    
+    else
+        dl2 = dl - tab[coile] - 1;    
 
     int ile = dl2 / tab[coile]; //ile razy musimy dany schemat odtworzyć
     int mod = dl2 % tab[coile]; //czy jest jakaś reszta
@@ -703,17 +669,17 @@ bool rozszyfruj( const int cc, const int num, char **tab_p, int *szyfr ){
         int k = *( *( tab_p + g ) + dl2 + i ) - 48; //jaka liczbę dodajemy do tej pierwszej wybranej, to dopisujemy na koniec notatki
         int up = tab[k] + tab[coile]; //o ile podnosimy do góry
         int max = ile; //ile razy w całości powtarzamy dany schemat
-        if( mod > i ){
+        if( mod > i )
             max++;
-        }
+        
         for( int j = 0; j < max; j++ ){
-            if( *( *( tab_p + g ) + i + ( j * tab[coile] ) ) != '\n' && *( *( tab_p + g ) + i + ( j * tab[coile] ) ) != '\t' ){
+            if( *( *( tab_p + g ) + i + ( j * tab[coile] ) ) != '\n' && *( *( tab_p + g ) + i + ( j * tab[coile] ) ) != '\t' )
                 *( *( tab_p + g ) + i + ( j * tab[coile] ) ) = *( *( tab_p + g ) + i + ( j * tab[coile] ) ) - up;
-            }
         }
     }
     *( *( tab_p + g ) + dl2 ) = '\0';
     *( tab_p + g ) = realloc_n( 1, dl2, *( tab_p + g ) );
+    
     return true;
 }
 

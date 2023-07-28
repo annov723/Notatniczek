@@ -28,7 +28,6 @@ int main( void ){
         switch( c ){
             case '1':
                 system( "clear" );
-                //load();
                 if( utworz( cc, num, tab_p ) ){
                     system( "clear" );
                     printf( "Notatka utworzona pomyslnie :)\n");
@@ -51,7 +50,6 @@ int main( void ){
                     break;
                 }
                 system( "clear" );
-                //load();
                 if( !wyswietl( cc, num, tab_p ) ){
                     system( "clear" );
                     printf( "Wystapil blad podczas wyswietlania :(((\n");
@@ -66,12 +64,10 @@ int main( void ){
                     break;
                 }
                 system( "clear" );
-                //load();
                 if( usun( cc, num, tab_p, &new_max, szyfr, &szy ) ){
                     system( "clear" );
                     printf( "Notatka usunieta pomyslnie :)\n");
                     num = num - 1;
-                    //printf( "%d\n%d * %d * %d\n", szy, szyfr[0], szyfr[1], szyfr[2] );
                     getchar();
                 }
                 else{
@@ -82,7 +78,6 @@ int main( void ){
 
             case '4':
                 system( "clear" );
-                //load();
                 if( importuj( cc, num, tab_p, szyfr, &szy ) ){
                     system( "clear" );
                     printf( "Notatka zaimportowana pomyslnie :)\n" );
@@ -96,7 +91,6 @@ int main( void ){
                     system( "clear" );
                     printf( "Wystapil blad podczas importowania :(((\n" );
                 }
-
                 break;
 
             case '5':
@@ -106,7 +100,6 @@ int main( void ){
                     break;
                 }
                 system( "clear" );
-                //load();
                 if( eksportuj( cc, num, tab_p ) ){
                     system( "clear" );
                     printf( "Notatka wyeksportowana pomyslnie :)\n" );
@@ -115,7 +108,6 @@ int main( void ){
                     system( "clear" );
                     printf( "Wystapil blad podczas eksportowania :(((\n" );
                 }
-
                 break;
 
             case '6':
@@ -125,13 +117,10 @@ int main( void ){
                     break;
                 }
                 system( "clear" );
-                //load();
                 if( szy < MAX_SZYFR && szyfruj( cc, num, tab_p, szyfr ) ){
                     system( "clear" );
                     printf( "Notatka zaszyfrowana pomyslnie :)\n" );
                     szy = szy + 1;
-
-                    //printf( "%d\n%d * %d * %d\n", szy, szyfr[0], szyfr[1], szyfr[2] );
                     getchar();
                 }
                 else if( szy >= MAX_SZYFR ){
@@ -151,12 +140,10 @@ int main( void ){
                     break;
                 }
                 system( "clear" );
-                //load();
                 if( szy > 0 && rozszyfruj( cc, num, tab_p, szyfr ) ){
                     system( "clear" );
                     printf( "Notatka rozszyfrowana pomyslnie :)\n" );
                     szy = szy - 1;
-                    //printf( "%d\n%d * %d * %d\n", szy, szyfr[0], szyfr[1], szyfr[2] );
                     getchar();
                 }
                 else{
@@ -174,15 +161,14 @@ int main( void ){
                         if( *( tab_p + i ) != NULL ){
                             free( *( tab_p + i ) );
                             *( tab_p + i ) = NULL;
-                        }
-                        
+                        } 
                     }
+
                     if( tab_p != NULL ){ //uwalniamy wielka tablice notatek
                         free( tab_p );
                         tab_p = NULL;
                     }
                     
-
                     return 0;
                 }
                 system( "clear" );
