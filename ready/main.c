@@ -68,7 +68,6 @@ int main( void ){
                     system( "clear" );
                     printf( "Notatka usunieta pomyslnie :)\n");
                     num = num - 1;
-                    getchar();
                 }
                 else{
                     system( "clear" );
@@ -121,7 +120,6 @@ int main( void ){
                     system( "clear" );
                     printf( "Notatka zaszyfrowana pomyslnie :)\n" );
                     szy = szy + 1;
-                    getchar();
                 }
                 else if( szy >= MAX_SZYFR ){
                     system( "clear" );
@@ -144,7 +142,6 @@ int main( void ){
                     system( "clear" );
                     printf( "Notatka rozszyfrowana pomyslnie :)\n" );
                     szy = szy - 1;
-                    getchar();
                 }
                 else{
                     system( "clear" );
